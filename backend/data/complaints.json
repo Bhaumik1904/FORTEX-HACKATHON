@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "category": "Hostel - Maintenance",
+    "description": "ROOM DOOR LOCK BROKEN",
+    "status": "Submitted",
+    "user_id": 1,
+    "timestamp": "2026-01-29T05:19:00.309Z",
+    "deadline": "2026-02-05T05:19:00.309Z",
+    "assignedTo": ""
+  },
+  {
+    "id": 2,
+    "category": "Hostel - Food Quality",
+    "description": "FOOD QUALITY IS VERY BAD",
+    "status": "Assigned",
+    "user_id": 2,
+    "timestamp": "2026-01-29T05:20:14.160Z",
+    "deadline": "2026-01-28T18:29:59.999Z",
+    "assignedTo": "Hostel Administration"
+  }
+]
