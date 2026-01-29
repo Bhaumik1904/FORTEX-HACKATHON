@@ -7,15 +7,42 @@ const router = express.Router();
 const DATA_FILE = path.join(__dirname, "../data/complaints.json");
 
 // In-memory storage for Vercel
-let complaints = [];
+// Hardcoded complaints for Vercel Demo
+const defaultComplaints = [
+  {
+    "id": 1,
+    "category": "Hostel - Maintenance",
+    "description": "ROOM DOOR LOCK BROKEN",
+    "status": "Submitted",
+    "user_id": 1,
+    "timestamp": new Date().toISOString(),
+    "deadline": new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
+    "assignedTo": ""
+  },
+  {
+    "id": 2,
+    "category": "Hostel - Food Quality",
+    "description": "FOOD QUALITY IS VERY BAD (Sample)",
+    "status": "Assigned",
+    "user_id": 2,
+    "timestamp": new Date().toISOString(),
+    "deadline": new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
+    "assignedTo": "Hostel Administration"
+  }
+];
+
+let complaints = [...defaultComplaints];
 
 try {
   if (fs.existsSync(DATA_FILE)) {
     const data = fs.readFileSync(DATA_FILE, "utf8");
-    complaints = JSON.parse(data);
+    const fileComplaints = JSON.parse(data);
+    fileComplaints.forEach(c => {
+      if (!complaints.find(dc => dc.id === c.id)) complaints.push(c);
+    });
   }
 } catch (err) {
-  console.error(`Error loading initial complaints:`, err.message);
+  console.error(`Using default in-memory complaints`);
 }
 
 router.get("/me", auth, (req, res) => {

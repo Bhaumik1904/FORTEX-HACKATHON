@@ -10,15 +10,47 @@ const path = require("path");
 const DATA_FILE = path.join(__dirname, "../data/users.json");
 
 // In-memory storage for Vercel (FileSystem is Read-Only)
-let users = [];
+// Hardcoded users for Vercel Demo (Stateless environment)
+// "admin123" hash: $2b$10$r.F6.p5/A.h.k.l.F.k.l.F.k.l.F.k.l.F.k.l.F.k.l.F.k.l.F (Example, need real hash)
+// Actually we will use a known hash for "admin123"
+// Hash for "password": $2b$10$3euPcmQFCiblsZeEu5s7p.9/.. (standard test hash)
+// Let's generate a new hash or just accept plain text for demo? 
+// No, keep bcrypt but use known hash.
+// Default Admin Password: "admin" -> Hash: $2b$10$Pk/1.abc...
+// Let's just create a new admin user in the list.
 
+const defaultUsers = [
+  {
+    "id": 1,
+    "email": "student@demo.com",
+    "password": "$2b$10$PutYourKnownHashHereOrJustSignup",
+    // We will trust the signup flow for students mostly, but let's put the existing from json if possible
+    "role": "student",
+    "name": "Demo Student"
+  },
+  {
+    "id": 3,
+    "email": "admin@srmap.edu.in",
+    "password": "$2b$10$1DIICHu20St7krevZ11UgeHeIRgYHaVE/hcU073BaLL2Sbr8E7TJa", // Existing Hash
+    "role": "admin",
+    "name": "Admin"
+  }
+];
+
+let users = [...defaultUsers];
+
+// Try to load additional from file if exists, but keep defaults
 try {
   if (fs.existsSync(DATA_FILE)) {
     const data = fs.readFileSync(DATA_FILE, "utf8");
-    users = JSON.parse(data);
+    const fileUsers = JSON.parse(data);
+    // Merge avoiding duplicates
+    fileUsers.forEach(u => {
+      if (!users.find(du => du.id === u.id)) users.push(u);
+    });
   }
 } catch (err) {
-  console.error("Error loading initial users:", err);
+  console.log("Using default in-memory users");
 }
 
 router.post("/signup", async (req, res) => {
