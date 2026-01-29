@@ -29,6 +29,13 @@ const defaultUsers = [
     "name": "Demo Student"
   },
   {
+    "id": 2,
+    "email": "bhaumik_hinunia@srmap.edu.in",
+    "password": "$2b$10$/VzaXzg8Az.g4/qeAaTL4ejE6RXc2xqY4EIqP/JSJpVi48CwbiIi2",
+    "role": "student",
+    "name": "Bhaumik"
+  },
+  {
     "id": 3,
     "email": "admin@srmap.edu.in",
     "password": "$2b$10$1DIICHu20St7krevZ11UgeHeIRgYHaVE/hcU073BaLL2Sbr8E7TJa", // Existing Hash
