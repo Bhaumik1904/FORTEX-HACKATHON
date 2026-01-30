@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router';
-import { AlertTriangle, TrendingUp, Clock, ExternalLink, AlertCircle } from 'lucide-react';
+import { AlertTriangle, Clock, ExternalLink, AlertCircle } from 'lucide-react';
 
 import { API_URL } from '../../services/api';
 
@@ -230,14 +230,20 @@ export function AdminDashboard() {
                           AI: Negative Sentiment
                         </span>
                       )}
+                      {complaint.deadline && new Date(complaint.deadline) < new Date() && complaint.status !== 'Resolved' && (
+                        <span className="text-xs px-2 py-0.5 bg-red-600 text-white rounded font-semibold flex items-center gap-1">
+                          <AlertCircle className="w-3 h-3" />
+                          Overdue
+                        </span>
+                      )}
                     </div>
                     <p className="text-sm text-slate-600">{complaint.description}</p>
                   </div>
                   <div className="flex flex-col items-end gap-2 ml-4">
                     <span className={`text-xs px-3 py-1 rounded-full font-medium whitespace-nowrap ${complaint.status === 'Resolved' ? 'bg-green-100 text-green-700' :
-                        complaint.status === 'In Progress' ? 'bg-yellow-100 text-yellow-700' :
-                          complaint.status === 'Assigned' ? 'bg-blue-100 text-blue-700' :
-                            'bg-slate-100 text-slate-700'
+                      complaint.status === 'In Progress' ? 'bg-yellow-100 text-yellow-700' :
+                        complaint.status === 'Assigned' ? 'bg-blue-100 text-blue-700' :
+                          'bg-slate-100 text-slate-700'
                       }`}>
                       {complaint.status}
                     </span>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Legend, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar } from 'recharts';
+import { ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, Tooltip } from 'recharts';
 import { TrendingUp, AlertTriangle, AlertCircle, BarChart3 } from 'lucide-react';
 
 import { API_URL } from '../../services/api';
@@ -36,7 +36,10 @@ export function SignalAnalysis() {
 
   // Analyze patterns
   const analyzePatterns = () => {
-    if (complaints.length === 0) return [];
+    // Only analyze active (unresolved) complaints for risk patterns
+    const activeComplaints = complaints.filter(c => c.status !== 'Resolved');
+
+    if (activeComplaints.length === 0) return [];
 
     const categoryCount: Record<string, number> = {};
     const categoryDescriptions: Record<string, string[]> = {};
@@ -46,7 +49,7 @@ export function SignalAnalysis() {
       c.deadline && new Date(c.deadline) < now && c.status !== 'Resolved'
     );
 
-    complaints.forEach(c => {
+    activeComplaints.forEach(c => {
       const mainCat = c.category.split(' - ')[0];
       categoryCount[mainCat] = (categoryCount[mainCat] || 0) + 1;
       if (!categoryDescriptions[mainCat]) categoryDescriptions[mainCat] = [];
@@ -59,8 +62,8 @@ export function SignalAnalysis() {
         category,
         count,
         trend: 'increasing',
-        explanation: `${count} complaints detected in ${category.toLowerCase()} category. Multiple students reporting similar concerns.`,
-        impact: count >= 4 ? 'High risk of collective action or escalation' : 'Medium risk - requires monitoring',
+        explanation: `${count} active complaints in ${category.toLowerCase()} category.`,
+        impact: count >= 4 ? 'High risk of collective action' : 'Medium risk - requires monitoring',
         timeframe: count >= 4 ? '2-4 days to potential escalation' : '5-7 days monitoring period',
       }));
 
@@ -83,7 +86,10 @@ export function SignalAnalysis() {
   // Generate radar data
   const getRadarData = () => {
     const categoryCount: Record<string, number> = {};
-    complaints.forEach(c => {
+    // Only count unresolved complaints for the risk radar
+    const activeComplaints = complaints.filter(c => c.status !== 'Resolved');
+
+    activeComplaints.forEach(c => {
       const cat = c.category.split(' - ')[0];
       categoryCount[cat] = (categoryCount[cat] || 0) + 1;
     });
