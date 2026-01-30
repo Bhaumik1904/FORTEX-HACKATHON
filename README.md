@@ -1,214 +1,205 @@
-🚨 Early Warning System – AI-Powered Student Complaint & Risk Monitoring
+# 🚨 Early Warning System
+## AI-Powered Student Complaint and Risk Monitoring Platform
 
-An AI-driven early warning and complaint management platform designed to detect risk patterns, prevent institutional crises, and ensure timely resolution of student issues.
+An AI-driven early warning and complaint management system designed to detect risk patterns, prevent institutional crises, and ensure timely resolution of student issues.
 
-This system enables students to submit complaints, while administrators monitor, analyze, and respond proactively using predictive indicators and escalation alerts.
+The platform allows students to submit complaints while administrators monitor trends, analyze severity, and act proactively using predictive indicators and escalation alerts.
 
-🔗 Live Deployment
+---
 
-Frontend:
-👉[ https://fortex-hackathon-m9g6.vercel.app](https://fortex-frontend.vercel.app/)
+## 🔗 Live Deployment
 
-Backend API:
-👉 [https://fortex-hackathon-m9g6.vercel.app](https://fortex-hackathon.vercel.app/)
+**Frontend**  
+https://fortex-frontend.vercel.app/
 
-GitHub Repository:
-👉 https://github.com/Bhaumik1904/FORTEX-HACKATHON
+**Backend API**  
+https://fortex-hackathon.vercel.app/
 
-SAMPLE DATA FOR LOGIN:
-Student Portal : 
-EMAIL - bhaumik_hinunia@srmap.edu.in
-Password - 123456
+**GitHub Repository**  
+https://github.com/Bhaumik1904/FORTEX-HACKATHON
 
-Admin Portal :
-Email - admin@srmap.edu.in
-Password - admin123
+---
 
-🧠 Problem Statement
+## 🔑 Sample Login Credentials
+
+### 🎓 Student Portal
+- Email: bhaumik_hinunia@srmap.edu.in  
+- Password: 123456  
+
+### 🛡️ Admin Portal
+- Email: admin@srmap.edu.in  
+- Password: admin123  
+
+---
+
+## 🧠 Problem Statement
 
 In many universities:
 
-Student complaints go unnoticed or are delayed.
+- Student complaints go unnoticed or are resolved too late  
+- Escalation happens only after unrest begins  
+- There is no system to predict institutional risk  
+- Administrators rely on manual tracking and emails  
 
-Escalation happens only after unrest starts.
+### This leads to:
+- Student dissatisfaction  
+- Protests and unrest  
+- Loss of trust in administration  
 
-There is no system to predict institutional risk.
+---
 
-Admins rely on manual tracking and emails.
+## 💡 Our Solution
 
-This leads to:
+**Early Warning System** is a real-time, AI-powered platform that:
 
-Student dissatisfaction
+- Collects student complaints  
+- Analyzes severity and sentiment  
+- Assigns deadlines automatically  
+- Detects unresolved complaint patterns  
+- Predicts institutional risk levels  
+- Alerts administrators before escalation occurs  
 
-Protests and unrest
+---
 
-Loss of trust in administration
+## 👥 User Roles
 
-💡 Our Solution
+### 👨‍🎓 Student
+- Register and login  
+- Submit complaints by category  
+- Get AI-based severity analysis  
+- Track complaint status  
+- View assigned department and deadline  
+- Receive escalation awareness  
 
-Early Warning System is a real-time, AI-powered platform that:
+### 🛡️ Admin
+- View all complaints  
+- Assign departments  
+- Set deadlines  
+- Update complaint status  
+  - Submitted → Assigned → In Progress → Resolved  
+- Receive deadline-missed alerts  
+- Monitor institutional risk score  
+- View real-time complaint feed  
+- Analyze predictive escalation signals  
 
-Collects student complaints
+---
 
-Analyzes severity & sentiment
+## 🔁 System Flow
 
-Assigns deadlines
+1. Student submits a complaint  
+2. AI analyzes severity and risk  
+3. Admin receives the complaint  
+4. Admin assigns department and deadline  
+5. System tracks complaint progress  
+6. If deadline is missed:
+   - Escalation alert is triggered  
+   - Risk score increases  
+7. Admin receives preventive action suggestions  
 
-Detects unresolved patterns
+---
 
-Predicts institutional risk
+## 📊 Key Features
 
-Alerts admins before escalation occurs
+- AI Severity Scoring  
+- Deadline Escalation Detection  
+- Institutional Risk Score  
+- Real-Time Complaint Feed  
+- Predictive Risk and Signal Analysis  
+- Student and Admin Dashboards  
+- JWT Authentication  
+- Role-Based Access Control  
 
-👥 User Roles
-👨‍🎓 Student
+---
 
-Register / Login
+## 🏗️ Technology Stack
 
-Submit complaints by category
+### Frontend
+- React with TypeScript  
+- Tailwind CSS  
+- React Router  
+- Lucide Icons  
 
-Get AI severity analysis
+### Backend
+- Node.js  
+- Express.js  
+- JWT Authentication  
+- bcryptjs  
+- File-based JSON storage  
 
-Track complaint status
+### Deployment
+- Vercel (Frontend and Backend)  
 
-View assigned department & deadline
+---
 
-Receive escalation awareness
-
-🛡️ Admin
-
-View all complaints
-
-Assign department
-
-Set deadlines
-
-Update status (Submitted → Assigned → In Progress → Resolved)
-
-Get deadline missed alerts
-
-View institutional risk score
-
-Monitor real-time complaint feed
-
-See predictive escalation signals
-
-🔁 System Flow
-
-Student submits complaint
-
-AI analyzes severity & risk
-
-Admin receives complaint
-
-Admin assigns department + deadline
-
-System tracks progress
-
-If deadline is missed → escalation alert
-
-Dashboard risk score increases
-
-Admin receives preventive action suggestions
-
-📊 Key Features
-
-AI Severity Scoring
-
-Deadline Escalation Detection
-
-Institutional Risk Score
-
-Real-Time Complaint Feed
-
-Signal Analysis & Predictive Risk
-
-Student & Admin Dashboards
-
-JWT Authentication
-
-Role-Based Access Control
-
-🏗️ Technology Stack
-Frontend
-
-React (TypeScript)
-
-Tailwind CSS
-
-React Router
-
-Lucide Icons
-
-Backend
-
-Node.js
-
-Express.js
-
-JWT Authentication
-
-bcryptjs
-
-File-based JSON storage
-
-Deployment
-
-Vercel (Frontend + Backend)
-
-📁 Project Structure
+## 📁 Project Structure
+<pre>
 FORTEX-HACKATHON
-│
 ├── backend
 │   ├── routes
 │   ├── data
-│   ├── index.js
+│   ├── middleware
+│   ├── utils
+│   └── index.js
 │
-├── src
-│   ├── components
-│   ├── routes.ts
-│   ├── api.ts
+├── frontend
+│   ├── src
+│   │   ├── components
+│   │   ├── pages
+│   │   ├── services
+│   │   │   └── api.ts
+│   │   ├── routes
+│   │   ├── App.tsx
+│   │   └── main.tsx
+│   │
+│   ├── public
+│   └── index.html
 │
-├── public
-├── App.tsx
-├── main.tsx
-└── README.md
+├── README.md
+└── package.json
+</pre>
 
-🔐 Security Measures
-Vulnerability	Counter Measure
-Plain passwords	Hashed using bcrypt
-Unauthorized access	JWT token authentication
-Cross-user access	User ID based filtering
-Role misuse	Role-based routing
-Fake complaints	Admin validation
-Deadline abuse	Escalation detection
-🚀 Future Scope
 
-Database (MongoDB / PostgreSQL)
+---
 
-ML-based sentiment analysis
+## 🔐 Security Measures
 
-SMS/Email alerts
+| Vulnerability | Counter Measure |
+|--------------|-----------------|
+| Plain passwords | Hashed using bcrypt |
+| Unauthorized access | JWT token authentication |
+| Cross-user access | User ID based filtering |
+| Role misuse | Role-based routing |
+| Fake complaints | Admin validation |
+| Deadline abuse | Escalation detection |
 
-Mobile App
+---
 
-Anonymous complaints
+## 🚀 Future Scope
 
-Heatmap dashboards
+- Database integration (MongoDB or PostgreSQL)  
+- ML-based sentiment analysis  
+- SMS and Email alerts  
+- Mobile application  
+- Anonymous complaints  
+- Heatmap and analytics dashboards  
 
-🏁 Conclusion
+---
 
-This system shifts complaint management from reactive to predictive.
+## 🏁 Conclusion
+
+This system shifts complaint management from reactive to predictive.  
 It enables institutions to act before unrest occurs, improving trust, safety, and transparency.
 
-👤 Author
+---
 
-Bhaumik Hinunia
-GitHub: https://github.com/Bhaumik1904
+## 👤 Author and Team
 
-Team Name : Error Terror
-<br>
-Bhaumik Hinunia<br>
-Shaik Zeeshaan Suhail<br>
-Namburi Sai Pavan Vybhav<br>
-Marisa Amith Ratna
+**Bhaumik Hinunia**  
+GitHub: https://github.com/Bhaumik1904  
+
+**Team Name:** Error Terror  
+
+- Bhaumik Hinunia  
+- Shaik Zeeshaan Suhail  
+- Namburi Sai Pavan Vybhav  
+- Marisa Amith Ratna  
