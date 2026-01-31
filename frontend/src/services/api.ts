@@ -1,4 +1,6 @@
-export const API_URL = import.meta.env.VITE_API_URL || "https://fortex-hackathon.vercel.app";
+// Hardcoded for debugging to ensure Env Var isn't overriding with localhost
+export const API_URL = "https://fortex-hackathon.vercel.app";
+console.log("Using API URL:", API_URL);
 
 export async function login(
   email: string,
