@@ -85,7 +85,29 @@ router.get("/me", auth, (req, res) => {
 
 router.get("/", auth, (req, res) => {
   // complaints is in-memory now
-  res.json(complaints);
+
+  if (!req.user) return res.status(401).json({ message: "Unauthorized" });
+
+  const { role, department } = req.user;
+
+  // Super Admin: View All
+  if (role === 'super_admin' || role === 'admin') {
+    return res.json(complaints);
+  }
+
+  // Department Admin: View only relevant complaints
+  if (role === 'dept_admin') {
+    if (!department) return res.json([]); // Safety check
+
+    const filtered = complaints.filter(c =>
+      (c.category && c.category.includes(department)) ||
+      (c.assignedTo === department)
+    );
+    return res.json(filtered);
+  }
+
+  // Students or others should not access this full list
+  return res.status(403).json({ message: "Access denied" });
 });
 
 router.post("/", auth, (req, res) => {
