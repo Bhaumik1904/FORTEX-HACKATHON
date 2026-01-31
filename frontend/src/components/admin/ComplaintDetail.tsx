@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate, Link } from 'react-router';
-import { ArrowLeft, Calendar, User, AlertCircle, CheckCircle, Clock, Star } from 'lucide-react';
+import { useParams, Link } from 'react-router';
+import { ArrowLeft, Calendar, User, AlertCircle, CheckCircle, Star } from 'lucide-react';
 
 import { API_URL } from '../../services/api';
 import { ComplaintTimeline } from './ComplaintTimeline';
@@ -37,7 +37,6 @@ const departments = [
 
 export function ComplaintDetail() {
   const { id } = useParams();
-  const navigate = useNavigate();
   const [complaint, setComplaint] = useState<Complaint | null>(null);
   const [assignedTo, setAssignedTo] = useState('');
   const [deadlineType, setDeadlineType] = useState<'today' | 'custom'>('today');
