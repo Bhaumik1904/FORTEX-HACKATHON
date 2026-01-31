@@ -1,6 +1,7 @@
-import { login } from "../../services/api";
+import { login, testBackend } from "../../services/api";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router";
+// import { Link } from "react-router-dom";
 import { GraduationCap, Shield, AlertTriangle } from "lucide-react";
 
 
@@ -12,33 +13,39 @@ export function Login() {
   const [role, setRole] = useState<'student' | 'admin'>('student');
 
   const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  try {
-    const data = await login(email, password, role);
+    try {
+      const data = await login(email, password, role);
 
 
-    if (!data.token) {
-      alert("Invalid email or password");
-      return;
+      if (!data.token) {
+        alert("Invalid email or password");
+        return;
+      }
+
+      // Store token (REAL auth)
+      localStorage.setItem("token", data.token);
+
+      // Optional: keep currentUser for UI usage
+      localStorage.setItem('user', JSON.stringify(data.user)); // 🔥 Store User Data
+
+      console.log("Login Success! Redirecting...", data.user.role);
+
+      if (data.user.role === 'admin') {
+        navigate('/admin');
+      } else {
+        navigate('/student/dashboard');
+      }
+    } catch (err: any) {
+      console.error("Login Error: ", err);
+      // Log more details if it's a fetch error
+      if (err.message === "Failed to fetch") {
+        console.error("Network Error: Backend may be down or CORS is blocking it.");
+      }
+      alert("Login failed. Backend not reachable.");
     }
-
-    // Store token (REAL auth)
-    localStorage.setItem("token", data.token);
-
-    // Optional: keep currentUser for UI usage
-    localStorage.setItem("currentUser", JSON.stringify(data.user));
-
-    // Navigate based on role (UI stays same)
-    if (role === "student") {
-      navigate("/student");
-    } else {
-      navigate("/admin");
-    }
-  } catch (error) {
-    alert("Login failed. Backend not reachable.");
-  }
-};
+  };
 
 
   return (
@@ -60,7 +67,7 @@ export function Login() {
         {/* Login Form */}
         <div className="bg-white rounded-xl shadow-lg p-8 border border-slate-200">
           <h2 className="text-xl font-semibold text-slate-900 mb-6">Sign In</h2>
-          
+
           <form onSubmit={handleSubmit} className="space-y-5">
             {/* Role Selection */}
             <div>
@@ -71,11 +78,10 @@ export function Login() {
                 <button
                   type="button"
                   onClick={() => setRole('student')}
-                  className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${
-                    role === 'student'
-                      ? 'border-blue-600 bg-blue-50 text-blue-900'
-                      : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
-                  }`}
+                  className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${role === 'student'
+                    ? 'border-blue-600 bg-blue-50 text-blue-900'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                    }`}
                 >
                   <GraduationCap className="w-5 h-5" />
                   <span className="font-medium">Student</span>
@@ -83,11 +89,10 @@ export function Login() {
                 <button
                   type="button"
                   onClick={() => setRole('admin')}
-                  className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${
-                    role === 'admin'
-                      ? 'border-blue-600 bg-blue-50 text-blue-900'
-                      : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
-                  }`}
+                  className={`flex items-center justify-center gap-2 px-4 py-3 rounded-lg border-2 transition-all ${role === 'admin'
+                    ? 'border-blue-600 bg-blue-50 text-blue-900'
+                    : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300'
+                    }`}
                 >
                   <Shield className="w-5 h-5" />
                   <span className="font-medium">Admin</span>
@@ -134,6 +139,19 @@ export function Login() {
             >
               Sign In
             </button>
+            <div className="mt-4 text-center">
+              <button type="button" onClick={async () => {
+                try {
+                  const res = await testBackend();
+                  alert(`Backend Connect Success: ${JSON.stringify(res)}`);
+                } catch (e: any) {
+                  alert(`Backend Connect Failed: ${e.message}`);
+                  console.error(e);
+                }
+              }} className="text-xs text-blue-500 underline">
+                Test Backend Connection
+              </button>
+            </div>
           </form>
 
           {/* Sign Up Link */}

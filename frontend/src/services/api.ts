@@ -69,3 +69,9 @@ export async function getMyComplaints() {
 
   return res.json();
 }
+
+export async function testBackend() {
+  const res = await fetch(`${API_URL}/`);
+  if (!res.ok) throw new Error("Backend reachable but returned error " + res.status);
+  return res.json();
+}
