@@ -32,7 +32,7 @@ export function Login() {
 
       console.log("Login Success! Redirecting...", data.user.role);
 
-      if (data.user.role === 'admin') {
+      if (['admin', 'super_admin', 'dept_admin'].includes(data.user.role)) {
         navigate('/admin');
       } else {
         navigate('/student');

@@ -6,25 +6,36 @@ export function AdminLayout() {
   const location = useLocation();
   const navigate = useNavigate();
   const [userName, setUserName] = useState('Administrator');
+  const [userRoleCount, setUserRoleCount] = useState('Administrator');
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-if (!token) {
-  navigate("/login");
-  return;
-}
+    if (!token) {
+      navigate("/login");
+      return;
+    }
 
-// Optional: decode JWT payload to get role/name
-try {
-  const payload = JSON.parse(atob(token.split(".")[1]));
-  if (payload.role !== "admin") {
-    navigate("/login");
-    return;
-  }
-  setUserName(payload.name || "Administrator");
-} catch {
-  navigate("/login");
-}
+    // Optional: decode JWT payload to get role/name
+    try {
+      const payload = JSON.parse(atob(token.split(".")[1]));
+
+      // Allow legacy 'admin' plus new roles
+      if (!['admin', 'super_admin', 'dept_admin'].includes(payload.role)) {
+        navigate("/login");
+        return;
+      }
+
+      setUserName(payload.name || "Administrator");
+
+      if (payload.role === 'dept_admin') {
+        setUserRoleCount(payload.department || "Dept Admin");
+      } else {
+        setUserRoleCount("Super Admin");
+      }
+
+    } catch {
+      navigate("/login");
+    }
 
   }, [navigate]);
 
@@ -61,7 +72,7 @@ try {
             <div className="flex items-center gap-4">
               <div className="text-right">
                 <p className="text-sm font-medium text-slate-900">{userName}</p>
-                <p className="text-xs text-slate-500">Administrator</p>
+                <p className="text-xs text-slate-500">{userRoleCount}</p>
               </div>
               <button
                 onClick={handleLogout}
@@ -83,11 +94,10 @@ try {
               <li>
                 <Link
                   to="/admin"
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive('/admin') && location.pathname === '/admin'
-                      ? 'bg-blue-900 text-white'
-                      : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/admin') && location.pathname === '/admin'
+                    ? 'bg-blue-900 text-white'
+                    : 'text-slate-700 hover:bg-slate-100'
+                    }`}
                 >
                   <Activity className="w-5 h-5" />
                   <span className="font-medium">Dashboard</span>
@@ -96,11 +106,10 @@ try {
               <li>
                 <Link
                   to="/admin/signal-analysis"
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive('/admin/signal-analysis')
-                      ? 'bg-blue-900 text-white'
-                      : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/admin/signal-analysis')
+                    ? 'bg-blue-900 text-white'
+                    : 'text-slate-700 hover:bg-slate-100'
+                    }`}
                 >
                   <BarChart3 className="w-5 h-5" />
                   <span className="font-medium">Signal Analysis</span>
