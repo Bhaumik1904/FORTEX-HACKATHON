@@ -9,31 +9,36 @@ export function StudentLayout() {
   const [showEmergencyModal, setShowEmergencyModal] = useState(false);
 
   useEffect(() => {
-  const raw = localStorage.getItem("currentUser");
+    const raw = localStorage.getItem("currentUser");
+    console.log("[StudentLayout] Checking Auth. Raw:", raw);
 
-  if (!raw || raw === "undefined") {
-    localStorage.removeItem("currentUser");
-    navigate("/login");
-    return;
-  }
+    if (!raw || raw === "undefined") {
+      console.log("[StudentLayout] No user found. Redirecting to login.");
+      localStorage.removeItem("currentUser");
+      navigate("/login");
+      return;
+    }
 
-  let userData;
-  try {
-    userData = JSON.parse(raw);
-  } catch (err) {
-    console.error("Invalid currentUser in storage:", raw);
-    localStorage.removeItem("currentUser");
-    navigate("/login");
-    return;
-  }
+    let userData;
+    try {
+      userData = JSON.parse(raw);
+    } catch (err) {
+      console.error("[StudentLayout] Invalid JSON:", raw);
+      localStorage.removeItem("currentUser");
+      navigate("/login");
+      return;
+    }
 
-  if (!userData || userData.role !== "student") {
-    navigate("/login");
-    return;
-  }
+    console.log("[StudentLayout] User Data:", userData);
 
-  setUserName(userData.name || "Student");
-}, [navigate]);
+    if (!userData || userData.role !== "student") {
+      console.log("[StudentLayout] Role mismatch. Expected student, got:", userData?.role);
+      navigate("/login");
+      return;
+    }
+
+    setUserName(userData.name || "Student");
+  }, [navigate]);
 
 
 
@@ -101,11 +106,10 @@ export function StudentLayout() {
               <li>
                 <Link
                   to="/student"
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive('/student')
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/student')
                       ? 'bg-blue-600 text-white'
                       : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                    }`}
                 >
                   <FileText className="w-5 h-5" />
                   <span className="font-medium">Submit Complaint</span>
@@ -114,11 +118,10 @@ export function StudentLayout() {
               <li>
                 <Link
                   to="/student/my-complaints"
-                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                    isActive('/student/my-complaints')
+                  className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/student/my-complaints')
                       ? 'bg-blue-600 text-white'
                       : 'text-slate-700 hover:bg-slate-100'
-                  }`}
+                    }`}
                 >
                   <List className="w-5 h-5" />
                   <span className="font-medium">My Complaints</span>
