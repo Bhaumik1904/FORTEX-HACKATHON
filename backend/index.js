@@ -7,7 +7,7 @@ const complaintRoutes = require("./routes/complaints");
 const app = express();
 
 app.use(cors({
-  origin: "http://localhost:3000",
+  origin: ["http://localhost:3000", "https://fortex-frontend.vercel.app", "https://fortex-hackathon-m9g6.vercel.app", "https://fortex-hackathon.vercel.app"],
   credentials: true
 }));
 

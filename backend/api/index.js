@@ -7,13 +7,7 @@ const complaintRoutes = require("../routes/complaints");
 const app = express();
 
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-    // Allow any origin for now to ensure it works locally and on Vercel
-    // In production, you might want to restrict this to specific domains
-    callback(null, true);
-  },
+  origin: ["http://localhost:3000", "https://fortex-frontend.vercel.app", "https://fortex-hackathon.vercel.app"],
   credentials: true
 }));
 
