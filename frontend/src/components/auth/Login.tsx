@@ -35,7 +35,7 @@ export function Login() {
       if (data.user.role === 'admin') {
         navigate('/admin');
       } else {
-        navigate('/student/dashboard');
+        navigate('/student');
       }
     } catch (err: any) {
       console.error("Login Error: ", err);
