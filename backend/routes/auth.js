@@ -39,8 +39,16 @@ const defaultUsers = [
     "id": 3,
     "email": "admin@srmap.edu.in",
     "password": "$2b$10$1DIICHu20St7krevZ11UgeHeIRgYHaVE/hcU073BaLL2Sbr8E7TJa", // Existing Hash
-    "role": "admin",
-    "name": "Admin"
+    "role": "super_admin",
+    "name": "Super Admin"
+  },
+  {
+    "id": 4,
+    "email": "hostel_admin@srmap.edu.in",
+    "password": "$2b$10$1DIICHu20St7krevZ11UgeHeIRgYHaVE/hcU073BaLL2Sbr8E7TJa",
+    "role": "dept_admin",
+    "department": "Hostel Administration",
+    "name": "Hostel Admin"
   }
 ];
 
@@ -97,7 +105,7 @@ router.post("/login", async (req, res) => {
   }
 
   const token = jwt.sign(
-    { userId: user.id, role: user.role },
+    { userId: user.id, role: user.role, department: user.department },
     "hackathon-secret",
     { expiresIn: "6h" }
   );
@@ -109,6 +117,7 @@ router.post("/login", async (req, res) => {
       id: user.id,
       email: user.email,
       role: user.role,
+      department: user.department,
       name: user.name
     }
   });
