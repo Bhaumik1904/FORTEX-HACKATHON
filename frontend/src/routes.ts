@@ -27,6 +27,7 @@ export const router = createBrowserRouter([
     Component: StudentLayout,
     children: [
       { index: true, Component: SubmitComplaint },
+      { path: "dashboard", Component: SubmitComplaint }, // Alias for /student/dashboard
       { path: "my-complaints", Component: MyComplaints },
     ],
   },
