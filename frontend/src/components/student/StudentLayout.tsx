@@ -10,10 +10,8 @@ export function StudentLayout() {
 
   useEffect(() => {
     const raw = localStorage.getItem("currentUser");
-    console.log("[StudentLayout] Checking Auth. Raw:", raw);
 
     if (!raw || raw === "undefined") {
-      console.log("[StudentLayout] No user found. Redirecting to login.");
       localStorage.removeItem("currentUser");
       navigate("/login");
       return;
@@ -23,16 +21,13 @@ export function StudentLayout() {
     try {
       userData = JSON.parse(raw);
     } catch (err) {
-      console.error("[StudentLayout] Invalid JSON:", raw);
+      console.error("Invalid currentUser in storage:", raw);
       localStorage.removeItem("currentUser");
       navigate("/login");
       return;
     }
 
-    console.log("[StudentLayout] User Data:", userData);
-
     if (!userData || userData.role !== "student") {
-      console.log("[StudentLayout] Role mismatch. Expected student, got:", userData?.role);
       navigate("/login");
       return;
     }
@@ -107,8 +102,8 @@ export function StudentLayout() {
                 <Link
                   to="/student"
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/student')
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-700 hover:bg-slate-100'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-slate-700 hover:bg-slate-100'
                     }`}
                 >
                   <FileText className="w-5 h-5" />
@@ -119,8 +114,8 @@ export function StudentLayout() {
                 <Link
                   to="/student/my-complaints"
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive('/student/my-complaints')
-                      ? 'bg-blue-600 text-white'
-                      : 'text-slate-700 hover:bg-slate-100'
+                    ? 'bg-blue-600 text-white'
+                    : 'text-slate-700 hover:bg-slate-100'
                     }`}
                 >
                   <List className="w-5 h-5" />
