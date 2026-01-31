@@ -1,4 +1,4 @@
-import { login, testBackend } from "../../services/api";
+import { login } from "../../services/api";
 import { useState } from "react";
 import { useNavigate, Link } from "react-router";
 // import { Link } from "react-router-dom";
@@ -139,19 +139,6 @@ export function Login() {
             >
               Sign In
             </button>
-            <div className="mt-4 text-center">
-              <button type="button" onClick={async () => {
-                try {
-                  const res = await testBackend();
-                  alert(`Backend Connect Success: ${JSON.stringify(res)}`);
-                } catch (e: any) {
-                  alert(`Backend Connect Failed: ${e.message}`);
-                  console.error(e);
-                }
-              }} className="text-xs text-blue-500 underline">
-                Test Backend Connection
-              </button>
-            </div>
           </form>
 
           {/* Sign Up Link */}

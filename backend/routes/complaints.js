@@ -2,6 +2,7 @@ const express = require("express");
 const fs = require("fs");
 const path = require("path");
 const auth = require("../middleware/auth");
+const { sendStatusUpdateEmail } = require("../services/notification");
 
 const router = express.Router();
 const DATA_FILE = path.join(__dirname, "../data/complaints.json");
@@ -29,6 +30,14 @@ const defaultComplaints = [
     "deadline": new Date(Date.now() + 3 * 24 * 60 * 60 * 1000).toISOString(),
     "assignedTo": "Hostel Administration"
   }
+];
+
+// Load Default Users to lookup emails (Mock logic for Vercel)
+// In a real app, you would query the database
+const defaultUsers = [
+  { id: 1, email: "student@demo.com", name: "Demo Student" },
+  { id: 2, email: "bhaumik_hinunia@srmap.edu.in", name: "Bhaumik" },
+  { id: 3, email: "admin@srmap.edu.in", name: "Admin" }
 ];
 
 let complaints = [...defaultComplaints];
@@ -163,6 +172,25 @@ router.put("/:id", auth, (req, res) => {
       status: updates.status,
       timestamp: new Date().toISOString()
     });
+
+    // 📧 Notification Logic
+    // Find the user to get their email
+    const userId = complaints[complaintIndex].user_id || complaints[complaintIndex].userId;
+    const user = defaultUsers.find(u => u.id === parseInt(userId)); // Mock lookup
+
+    // Also try to find in file-based users if available (optional)
+
+    if (user && user.email) {
+      console.log(`[Notification] Sending email to ${user.email} for status ${updates.status}`);
+      sendStatusUpdateEmail(
+        user.email,
+        user.name || "Student",
+        complaints[complaintIndex].category,
+        updates.status
+      ).catch(err => console.error("Notification Failed:", err));
+    } else {
+      console.log(`[Notification] User not found for ID ${userId}, skipping email.`);
+    }
   }
 
   complaints[complaintIndex] = {

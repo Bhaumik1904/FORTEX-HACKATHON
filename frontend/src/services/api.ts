@@ -1,6 +1,5 @@
 // Hardcoded for debugging to ensure Env Var isn't overriding with localhost
 export const API_URL = "https://fortex-hackathon.vercel.app";
-console.log("Using API URL:", API_URL);
 
 export async function login(
   email: string,
@@ -67,11 +66,5 @@ export async function getMyComplaints() {
     throw new Error("Not authorized");
   }
 
-  return res.json();
-}
-
-export async function testBackend() {
-  const res = await fetch(`${API_URL}/`);
-  if (!res.ok) throw new Error("Backend reachable but returned error " + res.status);
   return res.json();
 }
