@@ -28,7 +28,7 @@ export function Login() {
       localStorage.setItem("token", data.token);
 
       // Optional: keep currentUser for UI usage
-      localStorage.setItem('user', JSON.stringify(data.user)); // 🔥 Store User Data
+      localStorage.setItem('currentUser', JSON.stringify(data.user)); // 🔥 Store User Data
 
       console.log("Login Success! Redirecting...", data.user.role);
 
