@@ -1,4 +1,4 @@
-[
+  [
   {
     "id": 1,
     "category": "Hostel - Maintenance",
@@ -7,7 +7,10 @@
     "user_id": 1,
     "timestamp": "2026-01-29T05:19:00.309Z",
     "deadline": "2026-02-05T05:19:00.309Z",
-    "assignedTo": ""
+    "assignedTo": "",
+    "timeline": [
+      { "status": "Submitted", "timestamp": "2026-01-29T05:19:00.309Z" }
+    ]
   },
   {
     "id": 2,
@@ -17,6 +20,10 @@
     "user_id": 2,
     "timestamp": "2026-01-29T05:20:14.160Z",
     "deadline": "2026-01-28T18:29:59.999Z",
-    "assignedTo": "Hostel Administration"
+    "assignedTo": "Hostel Administration",
+    "timeline": [
+      { "status": "Submitted", "timestamp": "2026-01-29T05:20:14.160Z" },
+      { "status": "Assigned", "timestamp": "2026-01-29T06:00:00.000Z" }
+    ]
   }
 ]

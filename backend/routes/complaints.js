@@ -108,7 +108,10 @@ router.post("/", auth, (req, res) => {
     timestamp: new Date().toISOString(),
     deadline: deadlineIso,
     assignedTo: req.body.assignedTo || req.body.assignee || "", // ✅ Capture assignedTo if provided
-    aiAnalysis: req.body.aiAnalysis // ✅ keep AI data
+    aiAnalysis: req.body.aiAnalysis, // ✅ keep AI data
+    timeline: [
+      { status: "Submitted", timestamp: new Date().toISOString() }
+    ]
   };
 
   complaints.push(newComplaint);
@@ -150,6 +153,16 @@ router.put("/:id", auth, (req, res) => {
   // Fix: Map 'department' to 'category' (consistent with POST)
   if (updates.department && !updates.category) {
     updates.category = updates.department;
+  }
+
+  if (updates.status && updates.status !== complaints[complaintIndex].status) {
+    if (!complaints[complaintIndex].timeline) {
+      complaints[complaintIndex].timeline = [];
+    }
+    complaints[complaintIndex].timeline.push({
+      status: updates.status,
+      timestamp: new Date().toISOString()
+    });
   }
 
   complaints[complaintIndex] = {
